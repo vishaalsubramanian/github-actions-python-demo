@@ -1,0 +1,34 @@
+name: Python CI Workflow
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+
+      - name: Run Python Program
+        run: python calculator.py
+
+      - name: Execute Unit Tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
